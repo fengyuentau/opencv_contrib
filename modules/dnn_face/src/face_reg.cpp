@@ -18,10 +18,7 @@ cv::Mat DNNFaceRecognizer::facefeature(cv::Mat face_image){
     return this->model.forward()[0];
 }
 
-/** 
-    @param distance string  defining the similarity with optional values "norml2" and "cosine"
-*/
-float DNNFaceRecognizer::facematch(cv::Mat featureVec1, cv::Mat featureVec2, string distance="cosine");{
+float DNNFaceRecognizer::facematch(cv::Mat featureVec1, cv::Mat featureVec2, string distance);{
     if(distance == "cosine"){
         return cv::sum(featureVec1.mul(featureVec2))[0]/(cv::norm(featureVec1)*cv::norm(featureVec2));
     }else if(distance == "norml2"){
