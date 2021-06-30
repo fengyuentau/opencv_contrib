@@ -28,37 +28,33 @@ int main(int argc, char ** argv)
     float nms_thresh = 0.3;
     int top_k = 5000;
 
+    // Initialize DNNFaceDetector
     dnn_face::DNNFaceDetector faceDetector(onnx_path);
     vector<dnn_face::Face> faces = faceDetector.detect(image, score_thresh, nms_thresh, top_k);
 
-    // visualize results
+    // Visualize results
     const int thickness = 2;
-    for (dnn_face::Face f: faces)
+    for (size_t i = 0; i < faces.size(); i++)
     {
-        int x1 = f.box_tlwh.x;
-        int y1 = f.box_tlwh.y;
-        int w  = f.box_tlwh.width;
-        int h  = f.box_tlwh.height;
-        float score = f.score;
+        // Print results
+        cout << "Face " << i << faces[i].box_tlwh << " " << faces[i].score << "\n";
 
-        cout << "[" << x1 << ", " << y1 << "] "
-             << "(" << w  << ", " << h  << ") "
-             << score << "\n";
-
-        // draw bounding box
-        rectangle(image, f.box_tlwh, Scalar(0, 255, 0), thickness);
-        // draw landmarks
-        circle(image, f.landmarks.right_eye,    2, Scalar(255,   0,   0), thickness);
-        circle(image, f.landmarks.left_eye,     2, Scalar(  0,   0, 255), thickness);
-        circle(image, f.landmarks.nose_tip,     2, Scalar(  0, 255,   0), thickness);
-        circle(image, f.landmarks.mouth_right,  2, Scalar(255,   0, 255), thickness);
-        circle(image, f.landmarks.mouth_left,   2, Scalar(  0, 255, 255), thickness);
+        // Draw bounding box
+        rectangle(image, faces[i].box_tlwh, Scalar(0, 255, 0), thickness);
+        // Draw landmarks
+        circle(image, faces[i].landmarks.right_eye,    2, Scalar(255,   0,   0), thickness);
+        circle(image, faces[i].landmarks.left_eye,     2, Scalar(  0,   0, 255), thickness);
+        circle(image, faces[i].landmarks.nose_tip,     2, Scalar(  0, 255,   0), thickness);
+        circle(image, faces[i].landmarks.mouth_right,  2, Scalar(255,   0, 255), thickness);
+        circle(image, faces[i].landmarks.mouth_left,   2, Scalar(  0, 255, 255), thickness);
     }
 
     try
     {
+        // Save result image
         std::cout << "Saved to result.jpg\n";
         imwrite("result.jpg", image);
+        // Display result image
         namedWindow(image_path, WINDOW_AUTOSIZE);
         imshow(image_path, image);
         waitKey(0);
