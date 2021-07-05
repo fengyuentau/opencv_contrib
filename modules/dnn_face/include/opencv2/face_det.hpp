@@ -7,8 +7,9 @@
 #include <vector>
 #include <cmath>
 
-#include <opencv2/imgproc.hpp>
 #include <opencv2/dnn.hpp>
+
+#include "face_def.hpp"
 
 /** @defgroup dnn_face DNN used for face recognition
 */
@@ -19,32 +20,6 @@ namespace dnn_face
 {
     //! @addtogroup dnn_face
     //! @{
-
-    /** @brief Structure to hold 5 landmarks for a face bounding box
-     */
-    typedef struct Landmarks_5
-    {
-        // right eye
-        Point2i right_eye;
-        // left eye
-        Point2i left_eye;
-        // nose
-        Point2i nose_tip;
-        // mouth right
-        Point2i mouth_right;
-        // mouth left
-        Point2i mouth_left;
-    } Landmarks_5;
-
-    /** @brief Structure to hold the details pertaining to a face bounding box
-     */
-    typedef struct Face
-    {
-        // box of output format: top-left coord (x1, y1), width and height (w, h)
-        Rect2i box_tlwh;
-        Landmarks_5 landmarks;
-        float score;
-    } Face;
 
     /** @brief A class to generate, hold priors and also decode from priors and deltas
      */
