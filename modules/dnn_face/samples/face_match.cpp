@@ -174,7 +174,17 @@ int main(int argc, char ** argv)
     // Initialize DNNFaceDetector
     dnn_face::DNNFaceDetector faceDetector(det_onnx_path);
     vector<dnn_face::Face> faces_1 = faceDetector.detect(image1, score_thresh, nms_thresh, top_k);
+    if (faces_1.size() < 1)
+    {
+        std::cerr << "Cannot find a face in " << image1_path << "\n";
+        return -1;
+    }
     vector<dnn_face::Face> faces_2 = faceDetector.detect(image2, score_thresh, nms_thresh, top_k);
+    if (faces_2.size() < 1)
+    {
+        std::cerr << "Cannot find a face in " << image2_path << "\n";
+        return -1;
+    }
 
     Mat aligned_face1 = AlignCrop(image1, faces_1[0].landmarks);
     Mat aligned_face2 = AlignCrop(image2, faces_2[0].landmarks);
