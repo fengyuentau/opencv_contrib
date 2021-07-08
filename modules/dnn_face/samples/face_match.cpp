@@ -79,7 +79,6 @@ int main(int argc, char ** argv)
     }
     std::cout << " Cosine Similarity: " << cos_score << ", threshold: " << cosine_similar_thresh << ". (higher value means higher similarity, max 1.0)\n";
 
-
     if(L2_score <= l2norm_similar_thresh)
     {
         std::cout << "They have the same identity;";
