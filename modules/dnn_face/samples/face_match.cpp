@@ -69,20 +69,25 @@ int main(int argc, char ** argv)
     float cos_score = faceRecognizer.facematch(feature1, feature2, "cosine");
     float L2_score = faceRecognizer.facematch(feature1, feature2, "norml2");
     
-    if(cos_score >= cosine_similar_thresh){
-        std::cout<<"They have the same identity."<<endl;
-    }else{
-        std::cout<<"They have different identities."<<endl;
+    if(cos_score >= cosine_similar_thresh)
+    {
+        std::cout << "They have the same identity;";
     }
+    else
+    {
+        std::cout << "They have different identities;";
+    }
+    std::cout << " Cosine Similarity: " << cos_score << ", threshold: " << cosine_similar_thresh << ". (higher value means higher similarity, max 1.0)\n";
 
-    if(L2_score <= l2norm_similar_thresh){
-        std::cout<<"They have the same identity."<<endl;
-    }else{
-        std::cout<<"They have different identities."<<endl;
+    if(L2_score <= l2norm_similar_thresh)
+    {
+        std::cout << "They have the same identity;";
     }
+    else
+    {
+        std::cout << "They have different identities.";
+    }
+    std::cout << " NormL2 Distance: " << L2_score << ", threshold: " << l2norm_similar_thresh << ". (lower value means higher similarity, min 0.0)\n";
     
-    std::cout<<"Cosine Similarity: "<<cos_score<<endl;
-    std::cout<<"NormL2 Distance: "<<L2_score<<endl;
-
     return 0;
 }
