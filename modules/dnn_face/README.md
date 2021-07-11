@@ -21,13 +21,14 @@ There are two models (ONNX format) pre-trained and required for this module:
 - [Face Recognition](https://drive.google.com/file/d/1ClK9WiB492c5OZFKveF3XiHCejoOxINW/view?usp=sharing)
     - Size: 36.9MB
     - Results:
-    |  Database   | Accuracy  | Threshold (normL2) | Threshold (cosine) |
-    |  ----  | ---- | ---- | ---- |
-    | LFW  | 99.60% | 1.272 | 0.363 |
-    | CALFW  | 94.71% | 1.390 | 0.301 |
-    | CPLFW  | 91.05% | 1.450 | 0.275 |
-    | AgeDB-30  | 94.90% | 1.446 | 0.277 |
-    | CFP-FP  | 94.80% | 1.571 | 0.212 |
+    
+    | Database | Accuracy | Threshold (normL2) | Threshold (cosine) |
+    | -------- | -------- | ------------------ | ------------------ |
+    | LFW      | 99.60%   | 1.272              | 0.363              |
+    | CALFW    | 93.95%   | 1.320              | 0.340              |
+    | CPLFW    | 91.05%   | 1.450              | 0.275              |
+    | AgeDB-30 | 94.90%   | 1.446              | 0.277              |
+    | CFP-FP   | 94.80%   | 1.571              | 0.212              |
 
 ## Examples
 
