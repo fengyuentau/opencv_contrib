@@ -21,7 +21,7 @@ There are two models (ONNX format) pre-trained and required for this module:
 - [Face Recognition](https://drive.google.com/file/d/1ClK9WiB492c5OZFKveF3XiHCejoOxINW/view?usp=sharing)
     - Size: 36.9MB
     - Results:
-    
+
     | Database | Accuracy | Threshold (normL2) | Threshold (cosine) |
     | -------- | -------- | ------------------ | ------------------ |
     | LFW      | 99.60%   | 1.272              | 0.363              |
@@ -87,4 +87,4 @@ float cos_score = faceRecognizer.facematch(feature1, feature2, "cosine");
 float L2_score = faceRecognizer.facematch(feature1, feature2, "norml2");
 ```
 
-In general, two faces can be considered to have the same identity if the cosine distance is greater than or equal to 0.34, or the normL2 distance is less than or equal to 1.32.
+For example, two faces have same identity if the cosine distance is greater than or equal to 0.34, or the normL2 distance is less than or equal to 1.32.
