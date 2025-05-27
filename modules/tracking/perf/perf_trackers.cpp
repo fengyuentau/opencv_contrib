@@ -28,6 +28,9 @@ class Tracking : public perf::TestBaseWithParam<TrackingParams_t>
 public:
     template<typename ROI_t = Rect2d, typename Tracker>
     void runTrackingTest(const Ptr<Tracker>& tracker, const TrackingParams_t& params);
+
+    template<typename ROI_t = Rect2d, typename Tracker>
+    void runTrackingTest1(const Ptr<Tracker>& tracker);
 };
 
 template<typename ROI_t, typename Tracker>
@@ -84,6 +87,52 @@ void Tracking::runTrackingTest(const Ptr<Tracker>& tracker, const TrackingParams
     SANITY_CHECK_NOTHING();
 }
 
+template<typename ROI_t, typename Tracker>
+void Tracking::runTrackingTest1(const Ptr<Tracker>& tracker)
+{
+    // Tracking image sequence.
+    std::vector<Mat> frames;
+    // frames.push_back(imread(findDataFile("cv/tracking/bag/00000001.jpg"), 1));
+    // frames.push_back(imread(findDataFile("cv/tracking/bag/00000002.jpg"), 1));
+    // frames.push_back(imread(findDataFile("cv/tracking/bag/00000003.jpg"), 1));
+    // frames.push_back(imread(findDataFile("cv/tracking/bag/00000004.jpg"), 1));
+    // frames.push_back(imread(findDataFile("cv/tracking/bag/00000005.jpg"), 1));
+    // frames.push_back(imread(findDataFile("cv/tracking/bag/00000006.jpg"), 1));
+
+    std::vector<std::string> image_paths = {
+        "cv/tracking/bag/00000001.jpg",
+        "cv/tracking/bag/00000002.jpg",
+        "cv/tracking/bag/00000003.jpg",
+        "cv/tracking/bag/00000004.jpg",
+        "cv/tracking/bag/00000005.jpg",
+        "cv/tracking/bag/00000006.jpg"
+    };
+    for (auto image_path : image_paths) {
+        auto m = imread(findDataFile(image_path), 1);
+        Mat mp;
+        cv::copyMakeBorder(m, mp, 0, 120, 0, 160, BORDER_CONSTANT, Scalar(0));
+        frames.push_back(mp);
+    }
+
+    Rect boundingBox = Rect(325, 164, 100, 100);
+
+    std::cout << "frame size = " << frames[0].size() << std::endl;
+
+    tracker->init(frames[0], (ROI_t)boundingBox);
+    PERF_SAMPLE_BEGIN();
+    {
+        for (int i = 1; i < 6; ++i)
+        {
+            ROI_t rc;
+            tracker->update(frames[i], rc);
+            // ASSERT_FALSE(rc.empty());
+        }
+    }
+    PERF_SAMPLE_END();
+
+    SANITY_CHECK_NOTHING();
+}
+
 
 //==================================================================================================
 
@@ -97,6 +146,12 @@ PERF_TEST_P(Tracking, TLD, testing::ValuesIn(getTrackingParams()))
 {
     auto tracker = legacy::TrackerTLD::create();
     runTrackingTest(tracker, GetParam());
+}
+
+PERF_TEST_P(Tracking, KCF, testing::ValuesIn(getTrackingParams()))
+{
+    auto tracker = legacy::TrackerKCF::create();
+    runTrackingTest1(tracker);
 }
 
 }} // namespace
